@@ -5,7 +5,7 @@ const Main = ({ quote }) => {
 };
 
 export const getServerSideProps = async () => {
-  const response = await fetch("https://ye.scidroid.co/api/");
+  const response = await fetch("https://ye.scidroid.co/api");
   const result = await response.json();
   const quote = result.quote;
 
