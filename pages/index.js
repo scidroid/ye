@@ -1,19 +1,12 @@
+import useSWR from "swr";
 import Quote from "../components/Quote";
 
-const Main = ({ quote }) => {
-  return <Quote quote={quote} />;
-};
+const fetcher = (...args) => fetch(...args).then(res => res.json())
 
-export const getServerSideProps = async () => {
-  const response = await fetch("https://ye.scidroid.co/api");
-  const result = await response.json();
-  const quote = result.quote;
-
-  return {
-    props: {
-      quote,
-    },
-  };
+const Main = () => {
+  const { data } = useSWR("/api", fetcher);
+  if (!data) return <Quote quote={"Loading..."} />;
+  return <Quote quote={data.quote} />;
 };
 
 export default Main;

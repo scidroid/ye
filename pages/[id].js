@@ -1,20 +1,14 @@
+import { useRouter } from "next/router";
+import useSWR from "swr";
 import Quote from "../components/Quote";
 
-const Main = ({ quote }) => {
-  return <Quote quote={quote} />;
-};
-
-export const getServerSideProps = async (context) => {
-  const { id } = context.query;
-  const response = await fetch("https://ye.scidroid.co/api/" + id);
-  const result = await response.json();
-  const quote = await result.quote;
-
-  return {
-    props: {
-      quote,
-    },
-  };
+const fetcher = (...args) => fetch(...args).then(res => res.json())
+const Main = () => {
+  const router = useRouter();
+  const { id } = router.query;
+  const { data } = useSWR(`/api/${id}`, fetcher);
+  if (!data) return <Quote quote={"Loading..."} />;
+  return <Quote quote={data.quote} />;
 };
 
 export default Main;
