@@ -11,7 +11,7 @@ import quotes from "../../datasets/quotes";
  *       200:
  *         description: A ye quote
  *       404:
- *         description: Your ID doens't exists!
+ *         description: Your ID doesn't exist!
  *       500:
  *         description: OH NO!, An sever error was encountered!
  */
@@ -19,7 +19,7 @@ import quotes from "../../datasets/quotes";
 const getQuoteById = (req, res) => {
   const { id } = req.query;
   if (isNaN(id) || id.includes(".") || id > quotes.length) {
-    res.status("404").json({ quote: "Your ID doens't exists!" });
+    res.status("404").json({ quote: "Your ID doesn't exist!" });
   } else {
     try {
       const quote = quotes[id - 1];
